@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class ArrayListExmple2 {
     public static void yazdir(ArrayList<String> a){
+        
         for(int i=0;i<a.size();i++){
             System.out.println("Element "+(i+1)+" : "+a.get(i));
         }
