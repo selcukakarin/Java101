@@ -32,7 +32,7 @@ public class HashMapMain {
         
         
         
-        System.out.println(list);
+        //System.out.println(list);
         /*System.out.println(hashMap);
         
         System.out.println(hashMap.get(50));
