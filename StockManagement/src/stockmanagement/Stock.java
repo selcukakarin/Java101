@@ -40,6 +40,7 @@ public class Stock extends javax.swing.JFrame {
         urunTablosu = new javax.swing.JTable();
         ekleButonu = new javax.swing.JButton();
         urunGuncelle = new javax.swing.JButton();
+        silButonu = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,6 +68,11 @@ public class Stock extends javax.swing.JFrame {
                 "Ürün İsmi", "Kategori", "Fiyat"
             }
         ));
+        urunTablosu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                urunTablosuMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(urunTablosu);
 
         ekleButonu.setText("Ürün Ekle");
@@ -83,6 +89,13 @@ public class Stock extends javax.swing.JFrame {
             }
         });
 
+        silButonu.setText("Ürün sil");
+        silButonu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                silButonuActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -93,7 +106,6 @@ public class Stock extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mesajYazisi, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -105,11 +117,13 @@ public class Stock extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(tfUrunIsmi)
                                     .addComponent(cbKategori, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(tfFiyat, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(68, 68, 68)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(ekleButonu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(urunGuncelle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                    .addComponent(tfFiyat, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(mesajYazisi, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(ekleButonu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(urunGuncelle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(silButonu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(48, Short.MAX_VALUE))))
@@ -140,7 +154,9 @@ public class Stock extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(urunGuncelle, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(50, 50, 50)
+                .addGap(23, 23, 23)
+                .addComponent(silButonu, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mesajYazisi, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -194,6 +210,38 @@ public class Stock extends javax.swing.JFrame {
         
     }//GEN-LAST:event_urunGuncelleActionPerformed
 
+    private void urunTablosuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_urunTablosuMouseClicked
+        DefaultTableModel model=(DefaultTableModel) urunTablosu.getModel();
+        
+        int seciliRow=urunTablosu.getSelectedRow();
+        tfUrunIsmi.setText(model.getValueAt(seciliRow, 0).toString());
+        cbKategori.setSelectedItem(model.getValueAt(seciliRow, 1).toString());
+        tfFiyat.setText(model.getValueAt(seciliRow, 2).toString());
+        
+    }//GEN-LAST:event_urunTablosuMouseClicked
+
+    private void silButonuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_silButonuActionPerformed
+        
+        mesajYazisi.setText("");
+        
+        DefaultTableModel model=(DefaultTableModel) urunTablosu.getModel();
+                
+        int seciliRow=urunTablosu.getSelectedRow();
+        
+        if(seciliRow==-1){
+            if(urunTablosu.getRowCount()==0){
+                mesajYazisi.setText("Ürün tablosu şuanda boş...");
+            }else{
+                mesajYazisi.setText("LütfenSilinecek bir ürün seçin");
+            }
+        } else{
+            model.removeRow(seciliRow);
+            
+            mesajYazisi.setText("Ürün başarıyla silindi.");
+        }
+        
+    }//GEN-LAST:event_silButonuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -237,6 +285,7 @@ public class Stock extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel mesajYazisi;
+    private javax.swing.JButton silButonu;
     private javax.swing.JTextField tfFiyat;
     private javax.swing.JTextField tfUrunIsmi;
     private javax.swing.JButton urunGuncelle;
